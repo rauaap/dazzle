@@ -1,0 +1,25 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Packaging/build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+
+# uv cache and local tool caches
+.cache/
+
+# Editor/temp files
+*.swp
+*.swo
+*~
+
+# Generated slide outputs
+*.html
