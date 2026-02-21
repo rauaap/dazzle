@@ -28,14 +28,14 @@ def build_parser() -> argparse.ArgumentParser:
         "--stylesheet",
         action="append",
         default=[],
-        help="Stylesheet path or inline CSS text (repeatable).",
+        help="Stylesheet file path (repeatable).",
     )
     build_parser.add_argument(
         "-j",
         "--javascript",
         action="append",
         default=[],
-        help="JavaScript path or inline JS text (repeatable).",
+        help="JavaScript file path (repeatable).",
     )
     build_parser.add_argument(
         "--no-default-css",

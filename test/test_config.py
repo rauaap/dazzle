@@ -11,15 +11,19 @@ class LoadBuildConfigTests(unittest.TestCase):
     def test_uses_local_config_then_merges_cli_values(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             cwd = Path(tmpdir)
+            (cwd / "cfg.css").write_text("h1 { color: red; }", encoding="utf-8")
+            (cwd / "cfg.js").write_text("window.A=1;", encoding="utf-8")
+            (cwd / "cli.css").write_text("h2 { color: blue; }", encoding="utf-8")
+            (cwd / "cli.js").write_text("window.B=2;", encoding="utf-8")
             (cwd / "dazzle.toml").write_text(
-                'extension=["toc"]\nstylesheet=["h1 { color: red; }"]\njavascript=["window.A=1;"]',
+                'extension=["toc"]\nstylesheet=["./cfg.css"]\njavascript=["./cfg.js"]',
                 encoding="utf-8",
             )
             cli = BuildCliOptions(
                 config_path=None,
                 extensions=["admonition"],
-                stylesheets=["h2 { color: blue; }"],
-                javascripts=["window.B=2;"],
+                stylesheets=["./cli.css"],
+                javascripts=["./cli.js"],
                 no_default_css=False,
                 no_default_js=False,
             )

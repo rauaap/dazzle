@@ -53,37 +53,25 @@ def load_build_config(cli: BuildCliOptions, cwd: Path, home: Path | None = None)
         candidate = Path(os.path.expanduser(value))
         if not candidate.is_absolute():
             candidate = (config_path.parent if config_path is not None else cwd) / candidate
-        if candidate.exists() and candidate.is_file():
-            css_chunks.append(candidate.read_text(encoding="utf-8"))
-        else:
-            css_chunks.append(value)
+        css_chunks.append(candidate.read_text(encoding="utf-8"))
 
     for value in cli.stylesheets:
         candidate = Path(os.path.expanduser(value))
         if not candidate.is_absolute():
             candidate = cwd / candidate
-        if candidate.exists() and candidate.is_file():
-            css_chunks.append(candidate.read_text(encoding="utf-8"))
-        else:
-            css_chunks.append(value)
+        css_chunks.append(candidate.read_text(encoding="utf-8"))
 
     for value in list(raw.get("javascript", [])):
         candidate = Path(os.path.expanduser(value))
         if not candidate.is_absolute():
             candidate = (config_path.parent if config_path is not None else cwd) / candidate
-        if candidate.exists() and candidate.is_file():
-            js_chunks.append(candidate.read_text(encoding="utf-8"))
-        else:
-            js_chunks.append(value)
+        js_chunks.append(candidate.read_text(encoding="utf-8"))
 
     for value in cli.javascripts:
         candidate = Path(os.path.expanduser(value))
         if not candidate.is_absolute():
             candidate = cwd / candidate
-        if candidate.exists() and candidate.is_file():
-            js_chunks.append(candidate.read_text(encoding="utf-8"))
-        else:
-            js_chunks.append(value)
+        js_chunks.append(candidate.read_text(encoding="utf-8"))
 
     return BuildConfig(
         extensions=extensions,

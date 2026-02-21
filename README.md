@@ -18,8 +18,8 @@ dazzle build slides.md -o deck.html
 
 - `-c, --config PATH`: load TOML config. If omitted, dazzle tries `./dazzle.toml`, then `~/.config/dazzle/config.toml`.
 - `-x, --extension EXT`: enable extra Python-Markdown extension (repeatable).
-- `-s, --stylesheet VALUE`: add CSS by file path or inline CSS text (repeatable).
-- `-j, --javascript VALUE`: add JS by file path or inline JS text (repeatable).
+- `-s, --stylesheet PATH`: add CSS from file path (repeatable).
+- `-j, --javascript PATH`: add JS from file path (repeatable).
 - `--no-default-css`: disable built-in `theme.css`.
 - `--no-default-js`: disable built-in `runtime.js`.
 
@@ -31,11 +31,11 @@ Config values are applied first, then CLI values are appended.
 # Repeatable markdown extension names
 extension = ["toc", "admonition"]
 
-# Each item can be a file path or inline CSS text
-stylesheet = ["./slides.css", "h1 { letter-spacing: 0.04em; }"]
+# Each item is a stylesheet file path
+stylesheet = ["./slides.css"]
 
-# Each item can be a file path or inline JS text
-javascript = ["./slides.js", "window.DEBUG = true;"]
+# Each item is a javascript file path
+javascript = ["./slides.js"]
 
 # Optional: disable built-in assets
 include_default_css = true
@@ -50,7 +50,7 @@ codehilite = { pygments_style = "friendly", noclasses = true }
 Example:
 
 ```bash
-dazzle build slides.md -o deck.html -x sane_lists -s ./extra.css -j "console.log('loaded')"
+dazzle build slides.md -o deck.html -x sane_lists -s ./extra.css -j ./extra.js
 ```
 
 ## Markdown features
