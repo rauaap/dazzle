@@ -11,7 +11,7 @@ class LoadBuildConfigTests(unittest.TestCase):
     def test_uses_local_config_then_merges_cli_values(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             cwd = Path(tmpdir)
-            (cwd / ".dazzle.toml").write_text(
+            (cwd / "dazzle.toml").write_text(
                 'extension=["toc"]\nstylesheet=["h1 { color: red; }"]\njavascript=["window.A=1;"]',
                 encoding="utf-8",
             )

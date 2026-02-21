@@ -30,8 +30,8 @@ def load_build_config(cli: BuildCliOptions, cwd: Path, home: Path | None = None)
     home_dir = home if home is not None else Path.home()
 
     config_path = cli.config_path.expanduser() if cli.config_path is not None else None
-    if config_path is None and (cwd / ".dazzle.toml").is_file():
-        config_path = cwd / ".dazzle.toml"
+    if config_path is None and (cwd / "dazzle.toml").is_file():
+        config_path = cwd / "dazzle.toml"
     if config_path is None and (home_dir / ".config" / "dazzle" / "config.toml").is_file():
         config_path = home_dir / ".config" / "dazzle" / "config.toml"
 

@@ -16,7 +16,7 @@ dazzle build slides.md -o deck.html
 
 ### Build flags
 
-- `-c, --config PATH`: load TOML config. If omitted, dazzle tries `./.dazzle.toml`, then `~/.config/dazzle/config.toml`.
+- `-c, --config PATH`: load TOML config. If omitted, dazzle tries `./dazzle.toml`, then `~/.config/dazzle/config.toml`.
 - `-x, --extension EXT`: enable extra Python-Markdown extension (repeatable).
 - `-s, --stylesheet VALUE`: add CSS by file path or inline CSS text (repeatable).
 - `-j, --javascript VALUE`: add JS by file path or inline JS text (repeatable).
@@ -25,7 +25,7 @@ dazzle build slides.md -o deck.html
 
 Config values are applied first, then CLI values are appended.
 
-### Config file (`.dazzle.toml`)
+### Config file (`dazzle.toml`)
 
 ```toml
 # Repeatable markdown extension names
