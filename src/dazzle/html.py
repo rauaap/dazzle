@@ -9,9 +9,23 @@ def _load_asset(name: str) -> str:
     return resources.files("dazzle").joinpath(name).read_text(encoding="utf-8")
 
 
-def render_document(deck: Deck, title: str) -> str:
-    css = _load_asset("theme.css")
-    js = _load_asset("runtime.js")
+def render_document(
+    deck: Deck,
+    title: str,
+    *,
+    extra_css: list[str] | None = None,
+    extra_js: list[str] | None = None,
+    include_default_css: bool = True,
+    include_default_js: bool = True,
+) -> str:
+    css_chunks: list[str] = []
+    js_chunks: list[str] = []
+    if include_default_css:
+        css_chunks.append(_load_asset("theme.css"))
+    if include_default_js:
+        js_chunks.append(_load_asset("runtime.js"))
+    css_chunks.extend(extra_css or [])
+    js_chunks.extend(extra_js or [])
     slides_markup: list[str] = []
 
     for slide in deck.slides:
@@ -34,7 +48,7 @@ def render_document(deck: Deck, title: str) -> str:
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{safe_title}</title>
   <style>
-{css}
+{"\n\n".join(css_chunks)}
   </style>
 </head>
 <body>
@@ -42,7 +56,7 @@ def render_document(deck: Deck, title: str) -> str:
 {joined_slides}
   </main>
   <script>
-{js}
+{"\n\n".join(js_chunks)}
   </script>
 </body>
 </html>
