@@ -6,7 +6,7 @@ import re
 from markdown import Markdown
 from dazzle.extensions.fragment_extension import FragmentExtension
 from dazzle.images import embed_images_in_html
-from dazzle.html import render_document
+from dazzle.render_html import render_document
 from dazzle.slides import Deck, FragmentRef, Slide, split_markdown_into_slides
 
 
