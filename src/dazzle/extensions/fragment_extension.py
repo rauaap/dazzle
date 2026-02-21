@@ -8,8 +8,6 @@ from markdown.extensions import Extension
 from markdown.preprocessors import Preprocessor
 from markdown.treeprocessors import Treeprocessor
 
-from dazzle.errors import CompileError
-
 _DIRECTIVE_RE = re.compile(r"^\s*:::\s*([A-Za-z0-9_-]+)\s*$")
 _DIRECTIVE_CLOSE_RE = re.compile(r"^\s*:::\s*$")
 _STAR_BULLET_RE = re.compile(r"^(\s*)\*\s+(.+)$")
@@ -50,15 +48,15 @@ class FragmentPreprocessor(Preprocessor):
                     in_fragment = False
                     output.append("</div>")
                     continue
-                raise CompileError(f"Unexpected directive close at line {idx}.")
+                raise ValueError(f"Unexpected directive close at line {idx}.")
 
             match = _DIRECTIVE_RE.match(line)
             if match:
                 directive = match.group(1)
                 if directive != "fragment":
-                    raise CompileError(f"Unsupported directive ':::{directive}' at line {idx}.")
+                    raise ValueError(f"Unsupported directive ':::{directive}' at line {idx}.")
                 if in_fragment:
-                    raise CompileError(f"Nested fragment directives are not supported (line {idx}).")
+                    raise ValueError(f"Nested fragment directives are not supported (line {idx}).")
                 in_fragment = True
                 fragment_start_line = idx
                 output.append('<div class="fragment" markdown="block">')
@@ -75,7 +73,7 @@ class FragmentPreprocessor(Preprocessor):
             output.append(line)
 
         if in_fragment:
-            raise CompileError(f"Unclosed fragment directive starting at line {fragment_start_line}.")
+            raise ValueError(f"Unclosed fragment directive starting at line {fragment_start_line}.")
 
         return output
 

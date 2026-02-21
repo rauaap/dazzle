@@ -4,7 +4,6 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from dazzle.errors import CompileError
 from dazzle.html_parser import PassthroughHTMLParser
 from dazzle.images import embed_images_in_html
 
@@ -34,11 +33,11 @@ class ImageEmbeddingTests(unittest.TestCase):
         self.assertEqual(html, out)
 
     def test_rejects_remote_images(self) -> None:
-        with self.assertRaisesRegex(CompileError, "Remote images are not allowed in v1"):
+        with self.assertRaisesRegex(ValueError, "Remote images are not allowed in v1"):
             embed_images_in_html('<img src="https://example.com/a.png">', Path.cwd())
 
     def test_rejects_unsupported_scheme(self) -> None:
-        with self.assertRaisesRegex(CompileError, "Unsupported image URL scheme"):
+        with self.assertRaisesRegex(ValueError, "Unsupported image URL scheme"):
             embed_images_in_html('<img src="ftp://example.com/a.png">', Path.cwd())
 
     def test_supports_file_scheme_with_percent_decoding(self) -> None:

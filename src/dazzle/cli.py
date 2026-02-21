@@ -5,7 +5,6 @@ from pathlib import Path
 import sys
 
 from dazzle.compiler import compile_markdown_file_to_html, compile_markdown_source_to_html
-from dazzle.errors import DazzleError
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -24,21 +23,17 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.command == "build":
         output_path = Path(args.output)
-        try:
-            if args.input == "-":
-                source = sys.stdin.read()
-                compile_markdown_source_to_html(
-                    source=source,
-                    source_name="stdin.md",
-                    source_dir=Path.cwd(),
-                    output_path=output_path,
-                )
-            else:
-                input_path = Path(args.input)
-                compile_markdown_file_to_html(input_path, output_path)
-        except DazzleError as exc:
-            print(f"error: {exc}", file=sys.stderr)
-            return 1
+        if args.input == "-":
+            source = sys.stdin.read()
+            compile_markdown_source_to_html(
+                source=source,
+                source_name="stdin.md",
+                source_dir=Path.cwd(),
+                output_path=output_path,
+            )
+        else:
+            input_path = Path(args.input)
+            compile_markdown_file_to_html(input_path, output_path)
         return 0
 
     parser.print_help()
